@@ -1,18 +1,32 @@
 import { useEffect, useState } from 'react'
-import { nanoid } from 'nanoid'
 
-import BanksMock from '../../mocks/banks.json'
 import { Bank } from '../models/Bank'
 import { BankCardView } from './BankCardView'
+import * as BankService from '../services/BankService'
 
 export default function BanksController() {
   const [banks, setBanks] = useState<Bank[]>([])
+  const [requestError, setRequestError] = useState<Error>()
 
   useEffect(() => {
-    const stateBanks = BanksMock.banks.map((bank) => ({ id: nanoid(), ...bank }))
+    const getBanksRequest = async () => {
+      const banks = await BankService.getBanks()
+      setBanks(banks)
+    }
 
-    setBanks(stateBanks)
+    getBanksRequest().catch((reason) => {
+      const error = reason as Error
+      setRequestError(new Error(error.message))
+    })
   }, [])
+
+  if (requestError) {
+    return (
+      <div className="h-screen flex items-center text-center text-2xl text-red-400">
+        <p>Ocurrio un error al realizar la petición, por favor intente refrescando la página</p>
+      </div>
+    )
+  }
 
   return (
     <ul className="flex flex-col gap-y-4 p-4">
