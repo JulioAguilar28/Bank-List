@@ -3,14 +3,23 @@ import { useEffect, useState } from 'react'
 import { BankCardView } from './BankCardView'
 import * as BankService from '../services/BankService'
 import { useBanks } from '../hooks/useBanks'
+import * as BankStorageService from '../services/BankLocalStorageService'
 
 export default function BanksController() {
   const { banks, setBanks } = useBanks()
   const [requestError, setRequestError] = useState<Error>()
 
+  const areSavedBanks = BankStorageService.getSavedBanks().length > 0
+
   useEffect(() => {
+    if (areSavedBanks) {
+      setBanks(BankStorageService.getSavedBanks())
+      return
+    }
+
     const getBanksRequest = async () => {
       const banks = await BankService.getBanks()
+      BankStorageService.saveBanks(banks)
       setBanks(banks)
     }
 
