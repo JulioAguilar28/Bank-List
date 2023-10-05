@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
-import { Bank } from '../models/Bank'
 import { BankCardView } from './BankCardView'
 import * as BankService from '../services/BankService'
+import { useBanks } from '../hooks/useBanks'
 
 export default function BanksController() {
-  const [banks, setBanks] = useState<Bank[]>([])
+  const { banks, setBanks } = useBanks()
   const [requestError, setRequestError] = useState<Error>()
 
   useEffect(() => {
