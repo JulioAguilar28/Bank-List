@@ -38,7 +38,7 @@ export default function BanksController() {
   }
 
   return (
-    <ul className="flex flex-col gap-y-4 p-4">
+    <ul className="flex flex-col gap-y-4 p-4 md:grid md:grid-cols-3 md:gap-x-4">
       {banks.length && banks.map((bank) => <BankCardView key={bank.id} bank={bank} />)}
     </ul>
   )

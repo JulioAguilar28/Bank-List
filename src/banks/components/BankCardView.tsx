@@ -8,13 +8,13 @@ export function BankCardView({ bank }: Props) {
   return (
     <li
       key={bank.id}
-      className="flex flex-col p-2 items-center w-full h-[calc(100vh_-_2rem)] gap-y-4 bg-white border border-gray-200 shadow-lg rounded-xl"
+      className="flex flex-col p-2 lg:p-4 items-center w-full h-[calc(100vh_-_2rem)] md:h-[26rem] gap-y-4 bg-white border border-gray-200 shadow-lg rounded-xl"
     >
-      <header className="w-full h-auto max-h-60">
+      <header className="w-full h-auto max-h-60 lg:max-h-48">
         <img
           src={bank.url}
           alt={`${bank.bankName} bank image`}
-          className="w-full h-full object-cover rounded-xl"
+          className="w-full h-full object-cover rounded-xl lg:object-contain"
         />
       </header>
 
